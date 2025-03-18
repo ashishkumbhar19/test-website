@@ -1,4 +1,4 @@
-// src/Navbar.js
+
 import React, { useState } from "react";
 import {
   AppBar,
@@ -13,20 +13,22 @@ import {
   AccordionSummary,
   AccordionDetails,
   Box,
-  Divider,
   Stack,
   List,
   ListItem,
   ListItemText,
-  ListItemIcon,
+  Select
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import { deepPurple } from "@mui/material/colors";
 
 function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [theme, setTheme] = useState("light");
+  const [status, setStatus] = useState("Online");
   const open = Boolean(anchorEl);
 
   const handleMenuOpen = (event) => {
@@ -43,26 +45,33 @@ function Navbar() {
   };
 
   return (
-    <AppBar
-      position="fixed"
-      sx={{
-        background: "#1E2952",
-        width: "100%",
-        top: 0,
-        left: 0,
-        right: 0,
-        overflow: "hidden",
-        boxShadow: "none",
-      }}
-    >
+    <AppBar position="fixed" sx={{ background: "#1E2952", width: "100%" }}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", padding: "0 20px" }}>
-        {/* Left Logo */}
-        <Typography variant="h6">SkyOne</Typography>
+        <Typography variant="h6" sx={{ color: "white", fontFamily: "Helvetica, Arial" }}>SkyOne</Typography>
 
-        {/* Right Profile Section */}
+        <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end", alignItems: "center", mr: 2 }}>
+          <Select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            sx={{ 
+              color: theme === "light" ? "black" : "white", 
+              background: theme === "light" ? "#ffffff" : "#444", 
+              borderRadius: 1,
+              height: 40,
+              minWidth: 150,
+              boxShadow: theme === "light" ? "0px 0px 10px rgba(0, 0, 0, 0.1)" : "none"
+            }}
+          >
+            <MenuItem value="Online">Offline</MenuItem>
+            <MenuItem value="Unavailable">Unavailable</MenuItem>
+            <MenuItem value="Busy">Busy</MenuItem>
+            <MenuItem value="Away">Away</MenuItem>
+          </Select>
+        </Box>
+
         <Box>
           <IconButton onClick={handleMenuOpen}>
-            <Avatar src="/profile.png" sx={{ width: 40, height: 40 }} />
+            <Avatar sx={{ bgcolor: deepPurple[500], width: 40, height: 40 }}>AK</Avatar>
           </IconButton>
 
           <Menu
@@ -71,112 +80,43 @@ function Navbar() {
             onClose={handleMenuClose}
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             transformOrigin={{ vertical: "top", horizontal: "right" }}
-            sx={{ mt: 2, ml: -1 }}
-            MenuListProps={{ sx: { padding: 0 } }}
-            PaperProps={{ sx: { width: 500, marginTop: "-8px", boxShadow: "0px 4px 10px rgba(0,0,0,0.2)" } }}
+            sx={{ mt: 1 }}
+            PaperProps={{ sx: { width: 400, background: theme === "light" ? "#f5f5f5" : "#333", color: theme === "light" ? "black" : "white", borderRadius: "12px" } }}
           >
-            {/* Profile Header */}
-            <Card sx={{ width: "100%", p: 2, background: "#f5f5f5", borderRadius: 0 }}>
+            <Card sx={{ width: "100%", p: 2, background: theme === "light" ? "#f5f5f5" : "#333", color: theme === "light" ? "black" : "white", borderRadius: 0 }}>
               <Stack direction="row" alignItems="center" spacing={2}>
-                <Avatar src="/profile.png" sx={{ width: 50, height: 50 }} />
+                <Avatar sx={{ bgcolor: deepPurple[400], width: 50, height: 50 }}>AK</Avatar>
                 <Box>
-                  <Typography variant="h6">Abcd</Typography>
-                  <Typography variant="body2" color="textSecondary">john.doe@example.com</Typography>
+                  <Typography variant="h6" sx={{ color: theme === "light" ? "black" : "white", fontFamily: "Helvetica, Arial" }}>Ashish Kumbhar</Typography>
+                  <Typography variant="body2" sx={{ color: theme === "light" ? "gray" : "lightgray", fontFamily: "Helvetica, Arial" }}>Ashish Kumbhar@gmail.com</Typography>
                 </Box>
               </Stack>
             </Card>
 
-            <Divider />
-
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>My Profile</Typography>
+            <Accordion disableGutters sx={{ background: theme === "light" ? "white" : "#444", color: theme === "light" ? "black" : "white", boxShadow: "none" }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: theme === "light" ? "black" : "white" }} />}>
+                <Typography fontFamily="Helvetica, Arial">Skills</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <List>
-                  <ListItem button>
-                    <ListItemText primary="Customer Care" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Tester" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Admin" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="OCR" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Support" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Customer Care" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Tester" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Admin" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="OCR" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Support" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Customer Care" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Tester" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Admin" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="OCR" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Support" />
-                  </ListItem>
+                <List sx={{ paddingY: 0 }}>
+                  {["Customer Care", "Tester", "Admin", "OCR", "Support","Customer Care", "Tester", "Admin", "OCR", "Support"].map((skill) => (
+                    <ListItem button key={skill} sx={{ '&:hover': { color: "cornflowerblue" } }}>
+                      <ListItemText primary={skill} sx={{ fontFamily: "Helvetica, Arial" }} />
+                    </ListItem>
+                  ))}
                 </List>
               </AccordionDetails>
             </Accordion>
 
-            <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>Status</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <List>
-                  <ListItem button>
-                    <ListItemText primary="Online" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Unavailable" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Busy" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Away" />
-                  </ListItem>
-                </List>
-              </AccordionDetails>
-            </Accordion>
-
-            <MenuItem onClick={handleThemeToggle}>
-              <ListItemIcon>
-                <Brightness4Icon fontSize="small" />
-              </ListItemIcon>
+            <MenuItem onClick={handleThemeToggle} sx={{ '&:hover': { color: "cornflowerblue" }, '&:hover svg': { color: "cornflowerblue" }, marginY: 2, justifyContent: "space-between", display: "flex", alignItems: "center", gap: 2 }}>
               Mode
+              {theme === "light" ? <DarkModeIcon fontSize="small" /> : <LightModeIcon fontSize="small" />}
             </MenuItem>
-            <MenuItem onClick={handleMenuClose}>
-              <ListItemIcon>
-                <ExitToAppIcon fontSize="small" />
-              </ListItemIcon>
+            <MenuItem onClick={handleMenuClose} sx={{ '&:hover': { color: "cornflowerblue" }, '&:hover svg': { color: "cornflowerblue" }, marginY: 2, justifyContent: "space-between", display: "flex", alignItems: "center", gap: 2 }}>
               Logout
+              <ExitToAppIcon fontSize="small" />
             </MenuItem>
+            
           </Menu>
         </Box>
       </Toolbar>
@@ -185,3 +125,8 @@ function Navbar() {
 }
 
 export default Navbar;
+
+
+
+
+
